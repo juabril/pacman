@@ -1,0 +1,53 @@
+<html>
+<SCRIPT>
+    var pos = 0;
+    let pageWidth = window.innerWidth;
+    const pacArray = [
+        ["PacMan1.png", "PacMan2.png"],
+        ["PacMan3.png", "PacMan4.png"]
+    ];
+    var direction = 0;
+    var focus = 0;
+
+    function Run() {
+        let img = document.getElementById("PacMan");
+        let imgWidth = img.width
+        focus = (focus + 1) % 2;
+        direction = checkPageBounds(direction, imgWidth, pos, pageWidth);
+        img.src = pacArray[direction][focus];
+        // Direction left to right is 0 and right to left is 1
+        // As far as Booleans go, zero is not true and positive one is true
+        if (direction) {
+            pos -= 20;
+            img.style.left = pos + "px";
+        } else {
+            pos += 20;
+            img.style.left = pos + 'px';
+        }
+        
+    }
+    // TODO: Add a Javascript setInterval() method that will call the Run() function above every 300 milliseconds. Note: in the video, Dr. Williams uses the setTimeout() method, but here we are going to use a slightly different
+    // method called setInterval(), so that you can have practice using this method.
+    // Inside of the Run() function you will also have to add an extra argument "pageWidth", which is declared on line 4 when you call the checkPageBounds() function below. 
+
+    setInterval(Run, 300);
+
+
+    function checkPageBounds(direction, imgWidth, pos, pageWidth) {
+        if(direction == 0 && pos + imgWidth > pageWidth){direction = 1};
+        if(direction == 1 && pos < 0) {direction = 0};
+        //
+        // Complete this to reverse direction on hitting page bounds
+        // 
+        return direction;
+    }
+
+    module.exports = checkPageBounds;
+
+</SCRIPT>
+
+<body>
+    <img id="PacMan" src="PacMan1.png" width='200' onclick="Run()" style="position:absolute"> </img>
+</body>
+
+</html>
